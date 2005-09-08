@@ -4,3 +4,10 @@ AM_INIT_AUTOMAKE(koopa, 0.1)
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 
+PKG_CHECK_MODULES([GLIB], [glib-2.0], , AC_MSG_ERROR([
+ *** GLib 2.0 is required to build libgaim; please make sure you have
+ *** the GLib development headers installed. The latest version of GLib
+ *** is always available at http://www.gtk.org/.]))
+
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
