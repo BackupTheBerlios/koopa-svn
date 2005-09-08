@@ -50,7 +50,6 @@ gaim_coreheaders = \
 	eventloop.h \
 	ft.h \
 	imgstore.h \
-	internal.h \
 	log.h \
 	md5.h \
 	network.h \
@@ -78,8 +77,15 @@ gaim_coreheaders = \
 	xmlnode.h
 
 noinst_LTLIBRARIES = libgaim.la
-noinst_HEADERS = $(gaim_coreheaders)
+noinst_HEADERS = $(gaim_coreheaders) \
+	internal.h \
+	gaim.h
 
-libgaim_la_SOURCES = $(gaim_coresources)
+# -Wno-shadows is called to avoid receiving a lot of output from glib sources
+libgaim_la_SOURCES = $(gaim_coresources) \
+	koopa.c
 libgaim_la_CFLAGS = $(GLIB_CFLAGS)
 libgaim_la_LIBS = $(GLIB_LIBS)
+
+AM_CPPFLAGS = \
+	-DSYSCONFDIR=\"$(sysconfdir)\"
