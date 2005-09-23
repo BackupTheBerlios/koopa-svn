@@ -27,8 +27,10 @@
 
 /* XXX CORE/UI */
 #include "away.h"
-#include "gtkgaim.h"
 
+#if 0
+#include "gtkgaim.h"
+#endif
 
 /* for people like myself who are too lazy to add an away msg :) */
 /* I don't know who "myself" is in this context.  The exclamation point

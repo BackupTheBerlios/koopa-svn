@@ -25,7 +25,9 @@
 #ifndef _GAIM_AWAY_H_
 #define _GAIM_AWAY_H_
 
+#if 0
 #include "gtkgaim.h"
+#endif
 
 /* XXX CUI: away messages aren't really anything more than char* but we need two char*'s
  * for the UI so that people can name their away messages when they save them. So these
@@ -38,16 +40,22 @@ struct away_message {
 
 extern GSList *away_messages;
 extern struct away_message *awaymessage;
+#if 0
 extern GtkWidget *awaymenu;
 extern GtkWidget *awayqueue;
 extern GtkListStore *awayqueuestore;
 
 extern void rem_away_mess(GtkWidget *, struct away_message *);
 extern void do_away_message(GtkWidget *, struct away_message *);
+#endif
+
 extern void do_away_menu();
 extern void toggle_away_queue();
 extern void purge_away_queue(GSList **);
+
+#if 0
 extern void do_im_back(GtkWidget *, GtkWidget *);
 void create_away_mess(GtkWidget *, void *);
+#endif
 
 #endif /* _GAIM_AWAY_H_ */

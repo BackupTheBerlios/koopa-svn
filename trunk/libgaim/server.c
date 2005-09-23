@@ -33,12 +33,14 @@
 #include "sound.h"
 #include "util.h"
 
-/* XXX UI Stuff */
 #include "away.h"
-#include "gtkdialogs.h"
 #include "gaim.h"
+#if 0
+/* XXX UI Stuff */
+#include "gtkdialogs.h"
 #include "gtkimhtml.h"
 #include "gtkutils.h"
+#endif
 
 #define SECS_BEFORE_RESENDING_AUTORESPONSE 600
 #define SEX_BEFORE_RESENDING_AUTORESPONSE "Only after you're married"
@@ -800,6 +802,7 @@ void serv_set_buddyicon(GaimConnection *gc, const char *filename)
 
 }
 
+#if 0
 int find_queue_row_by_name(char *name)
 {
 	gchar *temp;
@@ -838,6 +841,7 @@ int find_queue_total_by_name(char *name)
 
 	return i;
 }
+#endif
 
 /*
  * woo. i'm actually going to comment this function. isn't that fun. make
@@ -902,6 +906,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 	if (imflags & GAIM_CONV_IM_AUTO_RESP)
 		msgflags |= GAIM_MESSAGE_AUTO_RESP;
 
+#if 0
 	/* queue to the docklet instead of writing to a conversation window if:
 	 *  - there is a docklet
 	 *  - there is no conversation window
@@ -920,6 +925,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 			    gaim_prefs_get_bool("/gaim/gtk/away/queue_messages"));
 	queue_to_docklet = (docklet_count && !cnv &&
 			    gaim_prefs_get_bool("/plugins/gtk/docklet/queue_messages"));
+#endif
 
 	/*
 	 * Alright. Two cases for how to handle this. Either we're away or
@@ -936,6 +942,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 		struct last_auto_response *lar;
 		const gchar *auto_reply_pref;
 
+#if 0
 		/*
 		 * Either we're going to queue it or not. Because of the way
 		 * awayness currently works, this is fucked up. It's possible
@@ -1007,6 +1014,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 			gaim_conv_im_write(GAIM_CONV_IM(cnv), NULL, message, msgflags, mtime);
 			gaim_conv_window_flash(gaim_conversation_get_window(cnv));
 		}
+#endif
 
 		/*
 		 * Regardless of whether we queue it or not, we should send an
@@ -1055,6 +1063,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 		buffy = gaim_str_sub_away_formatters(tmpmsg, alias);
 		serv_send_im(gc, name, buffy, GAIM_CONV_IM_AUTO_RESP);
 
+#if 0
 		if (queue_to_away || queue_to_docklet) {
 			struct queued_message *qm;
 
@@ -1072,6 +1081,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 		} else if (cnv != NULL)
 			gaim_conv_im_write(GAIM_CONV_IM(cnv), NULL, buffy,
 						  GAIM_MESSAGE_SEND | GAIM_MESSAGE_AUTO_RESP, mtime);
+#endif
 
 		g_free(buffy);
 		g_free(tmpmsg);
@@ -1081,7 +1091,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 		 * doing that, or if the convo window doesn't exist, create it,
 		 * then display the message.
 		 */
-
+#if 0
 		if (queue_to_docklet) {
 			struct queued_message *qm;
 
@@ -1100,6 +1110,7 @@ void serv_got_im(GaimConnection *gc, const char *who, const char *msg,
 			gaim_conv_im_write(GAIM_CONV_IM(cnv), NULL, message, msgflags, mtime);
 			gaim_conv_window_flash(gaim_conversation_get_window(cnv));
 		}
+#endif
 	}
 
 	g_free(name);
@@ -1218,6 +1229,7 @@ void serv_got_update(GaimConnection *gc, const char *name, gboolean loggedin,
 									time(NULL));
 			g_free(tmp);
 		}
+#if 0
 		else if (awayqueue && find_queue_total_by_name(b->name)) {
 			struct queued_message *qm = g_new0(struct queued_message, 1);
 			g_snprintf(qm->name, sizeof(qm->name), "%s", b->name);
@@ -1227,6 +1239,7 @@ void serv_got_update(GaimConnection *gc, const char *name, gboolean loggedin,
 			qm->flags = GAIM_MESSAGE_SYSTEM;
 			message_queue = g_slist_append(message_queue, qm);
 		}
+#endif
 		gaim_sound_play_event(GAIM_SOUND_BUDDY_ARRIVE);
 
 		if(gaim_prefs_get_bool("/core/logging/log_system") &&
@@ -1289,7 +1302,9 @@ void serv_got_update(GaimConnection *gc, const char *name, gboolean loggedin,
 			gaim_conversation_write(c, NULL, tmp,
 									GAIM_MESSAGE_SYSTEM, time(NULL));
 			g_free(tmp);
-		} else if (awayqueue && find_queue_total_by_name(b->name)) {
+		}
+#if 0
+		else if (awayqueue && find_queue_total_by_name(b->name)) {
 			struct queued_message *qm = g_new0(struct queued_message, 1);
 			g_snprintf(qm->name, sizeof(qm->name), "%s", b->name);
 			qm->message = g_strdup_printf(_("%s logged out."), alias);
@@ -1298,6 +1313,7 @@ void serv_got_update(GaimConnection *gc, const char *name, gboolean loggedin,
 			qm->flags = GAIM_MESSAGE_SYSTEM;
 			message_queue = g_slist_append(message_queue, qm);
 		}
+#endif
 		serv_got_typing_stopped(gc, name); /* obviously not typing */
 		gaim_sound_play_event(GAIM_SOUND_BUDDY_LEAVE);
 
