@@ -47,8 +47,6 @@ struct GaimCore
 static GaimCoreUiOps *_ops  = NULL;
 static GaimCore      *_core = NULL;
 
-STATIC_PROTO_INIT
-
 gboolean
 gaim_core_init(const char *ui)
 {
@@ -68,9 +66,6 @@ gaim_core_init(const char *ui)
 	gaim_signals_init();
 
 	gaim_signal_register(core, "quitting", gaim_marshal_VOID, NULL, 0);
-
-	/* Initialize all static protocols. */
-	static_proto_init();
 
 	gaim_prefs_init();
 
